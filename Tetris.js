@@ -38,7 +38,7 @@ class Tetris {
     canLowerPiece() {
         const lows = this.current.piece.bottomLevel().map((num,i)=>num?[this.current.location[0],this.current.location[1]+i]:null)
         const checks = lows.map(low=>low?[low[0]+1,low[1]]:null)
-        return !checks.find(check=>check && this.board[check[0],check[1]]);
+        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
     }
 
     lowerPiece() {
