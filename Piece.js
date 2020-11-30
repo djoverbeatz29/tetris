@@ -1,8 +1,8 @@
 import pieceDict from './PieceDict';
 
 class Piece {
-    constructor() {
-        this.piece = pieceDict[Math.ceil(7 * Math.random())];
+    constructor(n=Math.ceil(7 * Math.random())) {
+        this.piece = pieceDict[n];
     }
 
     rotate() {
@@ -14,6 +14,10 @@ class Piece {
             }
         }
         this.piece = copy;
+    }
+
+    showPiece() {
+        console.log(this.piece.map(row=>row.map(col=>col?"X":" ").join('')).join('\n'))
     }
 
     bottomLevel() {

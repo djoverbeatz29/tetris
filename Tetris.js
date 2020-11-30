@@ -65,3 +65,5 @@ class Tetris {
         }
     }
 }
+
+export default Tetris;
