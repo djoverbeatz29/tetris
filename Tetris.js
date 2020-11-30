@@ -14,11 +14,13 @@ class Tetris {
     }
 
     placePiece(coords=this.current.location) {
+        const [x, y] = coords;
         const piece = this.current.piece;
-        const n = piece.length;
+        const shape = piece.piece;
+        const n = shape.length;
         for (let i=0;i<n;i++) {
             for (let j=0;j<n;j++) {
-                tetris[x+i][y+j]=piece[i][j];
+                this.board[x+i][y+j]=shape[i][j];
             }
         }
         this.current.location = [x, y];
