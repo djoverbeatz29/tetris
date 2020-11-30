@@ -29,8 +29,8 @@ class Tetris {
     getPiece() {
         const piece = new Piece();
         this.current = {
-            shape: piece,
-            location: [4-piece.length, 3]
+            piece: piece,
+            location: [4-piece.piece.length, 3]
         }
         this.placePiece();
     }
@@ -47,7 +47,7 @@ class Tetris {
     }
 
     renderBoard() {
-        this.board.slice(3,21).map(row=>row.map(col=>col?"X":" "));
+        console.log(this.board.slice(3,21).map(row=>row.map(col=>col?"X":" ").join('')).join('\n'));
     }
 
     checkBoard() {
