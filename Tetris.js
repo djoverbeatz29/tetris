@@ -2,7 +2,7 @@ import Piece from './Piece';
 
 class Tetris {
     constructor() {
-        this.board = [...Array(21).keys.map(i=>[...Array(10).keys].map(j=>0))];
+        this.board = [...Array(21).keys()].map(i=>[...Array(10).keys()].map(j=>0));
         this.current = {
             piece: null,
             location: null
