@@ -41,6 +41,12 @@ class Tetris {
         return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
     }
 
+    canMoveLeft() {
+    }
+
+    canMoveRight() {
+    }
+
     lowerPiece() {
         if (this.canLowerPiece()) this.placePiece([this.current.location[0]+1, this.current.location[1]]);
         else this.getPiece();
