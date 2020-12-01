@@ -14,12 +14,14 @@ class Tetris {
     }
 
     placePiece(coords=this.current.location) {
+        const [currX, currY] = this.current.location;
         const [x, y] = coords;
         const piece = this.current.piece;
         const shape = piece.piece;
         const n = shape.length;
         for (let i=0;i<n;i++) {
             for (let j=0;j<n;j++) {
+                if (shape[i][j]===1) this.board[currX+i][currY+j]=0;
                 this.board[x+i][y+j]=shape[i][j];
             }
         }
@@ -59,12 +61,12 @@ class Tetris {
     }
 
     moveLeft() {
-        if (this.canMoveRight()) this.placePiece([this.current.location[0], this.current.location[1]+1]);
+        if (this.canMoveLeft()) this.placePiece([this.current.location[0], this.current.location[1]-1]);
         else this.getPiece();
     }
 
     moveRight() {
-        if (this.canMoveLeft()) this.placePiece([this.current.location[0], this.current.location[1]-1]);
+        if (this.canMoveRight()) this.placePiece([this.current.location[0], this.current.location[1]+1]);
         else this.getPiece();
     }
 
