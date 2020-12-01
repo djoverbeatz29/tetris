@@ -35,26 +35,36 @@ class Tetris {
         this.placePiece();
     }
 
-    canLowerPiece() {
-        const lows = this.current.piece.bottomLevel().map((num,i)=>num!==undefined?[this.current.location[0],this.current.location[1]+i]:null)
+    canMoveDown() {
+        const lows = this.current.piece.bottommost().map((num,i)=>num!==undefined?[this.current.location[0],this.current.location[1]+i]:null)
         const checks = lows.map(low=>low!==undefined?[low[0]+1,low[1]]:null)
-        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
+        return !checks.find(check=>(check && (check[0]>=21 || this.board[[check[0]][check[1]]])));
     }
 
     canMoveLeft() {
         const lefts = t.current.piece.leftmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
         const checks = lefts.map(left=>left!==undefined?[left[0],left[1]-1]:null);
-        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
+        return !checks.find(check=>(check && (check[1]<0 || this.board[[check[0]][check[1]]])));
     }
 
     canMoveRight() {
         const rights = t.current.piece.rightmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
         const checks = rights.map(right=>right!==undefined?[right[0],right[1]+1]:null);
-        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
+        return !checks.find(check=>(check && (check[1]>=10 || this.board[[check[0]][check[1]]])));
     }
 
-    lowerPiece() {
-        if (this.canLowerPiece()) this.placePiece([this.current.location[0]+1, this.current.location[1]]);
+    moveDown() {
+        if (this.canMoveDown()) this.placePiece([this.current.location[0]+1, this.current.location[1]]);
+        else this.getPiece();
+    }
+
+    moveLeft() {
+        if (this.canMoveRight()) this.placePiece([this.current.location[0], this.current.location[1]+1]);
+        else this.getPiece();
+    }
+
+    moveRight() {
+        if (this.canMoveLeft()) this.placePiece([this.current.location[0], this.current.location[1]-1]);
         else this.getPiece();
     }
 

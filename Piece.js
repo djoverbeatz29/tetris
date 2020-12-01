@@ -44,7 +44,7 @@ class Piece {
         })
     }
 
-    bottomLevel() {
+    bottommost() {
         const n = this.piece.length;
         return [...Array(n).keys()].map(i=> {
             for (let j=n-1;j>=0;j--) {
