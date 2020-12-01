@@ -36,15 +36,21 @@ class Tetris {
     }
 
     canLowerPiece() {
-        const lows = this.current.piece.bottomLevel().map((num,i)=>num?[this.current.location[0],this.current.location[1]+i]:null)
-        const checks = lows.map(low=>low?[low[0]+1,low[1]]:null)
+        const lows = this.current.piece.bottomLevel().map((num,i)=>num!==undefined?[this.current.location[0],this.current.location[1]+i]:null)
+        const checks = lows.map(low=>low!==undefined?[low[0]+1,low[1]]:null)
         return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
     }
 
     canMoveLeft() {
+        const lefts = t.current.piece.leftmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
+        const checks = lefts.map(left=>left!==undefined?[left[0],left[1]-1]:null);
+        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
     }
 
     canMoveRight() {
+        const rights = t.current.piece.rightmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
+        const checks = rights.map(right=>right!==undefined?[right[0],right[1]+1]:null);
+        return !checks.find(check=>check && this.board[[check[0]][check[1]]]);
     }
 
     lowerPiece() {
