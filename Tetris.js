@@ -73,6 +73,11 @@ class Tetris {
         if (this.canMoveRight()) this.placePiece([this.current.location[0], this.current.location[1]+1]);
     }
 
+    rotate() {
+        this.current.piece.rotate();
+        this.placePiece();
+    }
+
     renderBoard() {
         console.log(this.board.slice(0,21).map(row=>row.map(col=>col?"X":" ").join('')).join('\n'));
     }
