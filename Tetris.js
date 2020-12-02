@@ -23,6 +23,10 @@ class Tetris {
         for (let i=0;i<n;i++) {
             for (let j=0;j<n;j++) {
                 if (shape[i][j]===1) this.board[currX+i][currY+j]=0;
+            }
+        }
+        for (let i=0;i<n;i++) {
+            for (let j=0;j<n;j++) {
                 this.board[x+i][y+j]=shape[i][j];
             }
         }
@@ -45,13 +49,13 @@ class Tetris {
     }
 
     canMoveLeft() {
-        const lefts = t.current.piece.leftmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
+        const lefts = this.current.piece.leftmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,this.current.location[1]+num]:null);
         const checks = lefts.map(left=>left!==undefined?[left[0],left[1]-1]:null);
         return !checks.find(check=>(check && (check[1]<0 || this.board[[check[0]][check[1]]])));
     }
 
     canMoveRight() {
-        const rights = t.current.piece.rightmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,t.current.location[1]+num]:null);
+        const rights = this.current.piece.rightmost().map((num,i)=>num!==undefined?[this.current.location[0]+i,this.current.location[1]+num]:null);
         const checks = rights.map(right=>right!==undefined?[right[0],right[1]+1]:null);
         return !checks.find(check=>(check && (check[1]>=10 || this.board[[check[0]][check[1]]])));
     }
@@ -63,16 +67,14 @@ class Tetris {
 
     moveLeft() {
         if (this.canMoveLeft()) this.placePiece([this.current.location[0], this.current.location[1]-1]);
-        else this.getPiece();
     }
 
     moveRight() {
         if (this.canMoveRight()) this.placePiece([this.current.location[0], this.current.location[1]+1]);
-        else this.getPiece();
     }
 
     renderBoard() {
-        console.log(this.board.slice(3,21).map(row=>row.map(col=>col?"X":" ").join('')).join('\n'));
+        console.log(this.board.slice(0,21).map(row=>row.map(col=>col?"X":" ").join('')).join('\n'));
     }
 
     checkBoard() {
