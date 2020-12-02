@@ -16,7 +16,7 @@ class Piece {
         this.piece = copy;
     }
 
-    showPiece() {
+    renderPiece() {
         console.log(this.piece.map(row=>row.map(col=>col?"X":" ").join('')).join('\n'))
     }
 

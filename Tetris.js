@@ -11,6 +11,7 @@ class Tetris {
         this.score = 0;
         this.level = 1;
         this.levelsCompleted = 0;
+        this.getPiece();
     }
 
     placePiece(coords=this.current.location) {
