@@ -80,7 +80,7 @@ class Tetris {
     checkBoard() {
         if (this.current.location < 3 && !this.canLowerPiece()) this.gameOn = false;
         else {
-            const completedRows = [...Array(this.board.length).keys()].find(i=>this.board[i].find(col=>!col)===undefined);
+            const completedRows = [...Array(this.board.length).keys()].filter(i=>this.board[i].find(col=>!col)===undefined);
             completedRows.forEach(i=>{
                 this.board.splice(i,1);
                 this.board.unshift([...Array(10).keys()].map(i=>0));
