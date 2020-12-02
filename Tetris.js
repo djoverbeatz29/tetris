@@ -49,7 +49,7 @@ class Tetris {
     }
 
     canMoveLeft() {
-        const lefts = this.current.piece.leftmost().map((num,i)=>num!==undefined?[t.current.location[0]+i,this.current.location[1]+num]:null);
+        const lefts = this.current.piece.leftmost().map((num,i)=>num!==undefined?[this.current.location[0]+i,this.current.location[1]+num]:null);
         const checks = lefts.map(left=>left!==undefined?[left[0],left[1]-1]:null);
         return !checks.find(check=>(check && (check[1]<0 || this.board[check[0]][check[1]])));
     }
