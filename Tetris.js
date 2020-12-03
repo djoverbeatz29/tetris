@@ -29,15 +29,7 @@ class Tetris {
     }
 
     getPiece() {
-        const curr = this.current.piece;
-        if (curr) {
-            const [x,y] = this.current.location;
-            for (let i=0; i<this.len; i++) {
-                for (let j=0; j<this.len; j++) {
-                    if (x+i<=20 && y+j>=0 && y+j<=10) this.board[x+i][y+j] = (curr.piece[i][j]===1 ? 2 : 0);
-                }
-            }
-        }
+        this.board = this.board.map(row=>row.map(col=>col?2:0));
         const piece = new Piece();
         const n = piece.piece.length;
         this.current = {
@@ -68,7 +60,7 @@ class Tetris {
 
     moveDown() {
         if (this.canMoveDown()) this.placePiece([this.current.location[0]+1, this.current.location[1]]);
-        else this.getPiece();
+        else this.checkBoard();
     }
 
     moveLeft() {
@@ -120,6 +112,7 @@ class Tetris {
                     this.levelsCompleted = 0;
                 }
             })
+            this.getPiece();
         }
     }
 }
