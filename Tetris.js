@@ -22,10 +22,11 @@ class Tetris {
         }
         for (let i=0; i<this.current.len; i++) {
             for (let j=0; j<this.current.len; j++) {
-                if (this.board[x+i][y+j]===0) this.board[x+i][y+j] = shape[i][j];
+                if (this.board[x+i]!==undefined && this.board[x+i][y+j]!==undefined && this.board[x+i][y+j]===0) this.board[x+i][y+j] = shape[i][j];
             }
         }
         this.current.location = [x,y];
+        this.renderBoard();
     }
 
     getPiece() {
@@ -72,16 +73,10 @@ class Tetris {
     }
 
     rotate() {
-        let copyPiece = Object.assign(Object.create(Object.getPrototypeOf(this.current.piece)), this.current.piece);
         const [x, y] = this.current.location;
-        const n = copyPiece.piece.length;
-        copyPiece.rotate();
-        for (let i=0; i<n; i++) {
-            for (let j=0; j<n; j++) {
-                if ((x+i >= 21 || y+j < 0 || y+j >= 10) && (copyPiece.piece[i][j]) || this.board[x+i][y+j]===2) {
-                    console.log('Cannot rotate piece');
-                    return;
-                }
+        for (let i=0; i<this.current.len; i++) {
+            for (let j=0; j<this.current.len; j++) {
+                if (this.current.piece.piece[i][j]) this.board[x+i][y+j]=0;
             }
         }
         this.current.piece.rotate();
