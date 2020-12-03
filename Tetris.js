@@ -3,10 +3,7 @@ import Piece from './Piece';
 class Tetris {
     constructor() {
         this.board = [...Array(21).keys()].map(i=>[...Array(10).keys()].map(j=>0));
-        this.current = {
-            piece: null,
-            location: null
-        };
+        this.current = {};
         this.gameOn = true;
         this.score = 0;
         this.level = 1;
@@ -17,27 +14,36 @@ class Tetris {
     placePiece(coords=this.current.location) {
         const [currX, currY] = this.current.location;
         const [x, y] = coords;
-        const piece = this.current.piece;
-        const shape = piece.piece;
-        const n = shape.length;
-        for (let i=0;i<n;i++) {
-            for (let j=0;j<n;j++) {
+        const shape = this.current.piece.piece;
+        for (let i=0; i<this.current.len; i++) {
+            for (let j=0; j<this.current.len; j++) {
                 if (shape[i][j]===1) this.board[currX+i][currY+j]=0;
             }
         }
-        for (let i=0;i<n;i++) {
-            for (let j=0;j<n;j++) {
-                this.board[x+i][y+j]=shape[i][j];
+        for (let i=0; i<this.current.len; i++) {
+            for (let j=0; j<this.current.len; j++) {
+                if (this.board[x+i][y+j]===0) this.board[x+i][y+j] = shape[i][j];
             }
         }
-        this.current.location = [x, y];
+        this.current.location = [x,y];
     }
 
     getPiece() {
+        const curr = this.current.piece;
+        if (curr) {
+            const [x,y] = this.current.location;
+            for (let i=0; i<this.len; i++) {
+                for (let j=0; j<this.len; j++) {
+                    if (x+i<=20 && y+j>=0 && y+j<=10) this.board[x+i][y+j] = (curr.piece[i][j]===1 ? 2 : 0);
+                }
+            }
+        }
         const piece = new Piece();
+        const n = piece.piece.length;
         this.current = {
             piece: piece,
-            location: [4-piece.piece.length, 3]
+            location: [4-n, 3],
+            len: n
         }
         this.placePiece();
     }
@@ -74,16 +80,34 @@ class Tetris {
     }
 
     rotate() {
+        let copyPiece = Object.assign(Object.create(Object.getPrototypeOf(this.current.piece)), this.current.piece);
+        const [x, y] = this.current.location;
+        const n = copyPiece.piece.length;
+        copyPiece.rotate();
+        for (let i=0; i<n; i++) {
+            for (let j=0; j<n; j++) {
+                if ((x+i >= 21 || y+j < 0 || y+j >= 10) && (copyPiece.piece[i][j]) || this.board[x+i][y+j]===2) {
+                    console.log('Cannot rotate piece');
+                    return;
+                }
+            }
+        }
         this.current.piece.rotate();
         this.placePiece();
     }
 
     renderBoard() {
-        console.log(this.board.slice(0,21).map(row=>row.map(col=>col?"X":" ").join('')).join('\n'));
+        console.log(this.board.slice(0,21).map(
+            row=>row.map(col=> {
+                if (col===2) return "X";
+                else if (col===1) return "O"
+                else return " ";
+            }).join('')).join('\n')
+        );
     }
 
     checkBoard() {
-        if (this.current.location < 3 && !this.canLowerPiece()) this.gameOn = false;
+        if (this.current.location[0] < 3 && !this.canMoveDown()) this.gameOn = false;
         else {
             const completedRows = [...Array(this.board.length).keys()].filter(i=>this.board[i].find(col=>!col)===undefined);
             completedRows.forEach(i=>{
