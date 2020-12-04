@@ -42,20 +42,20 @@ class Tetris {
     }
 
     canMoveDown() {
-        const lows = this.current.piece.bottommost().map((num,i)=>num!==undefined?[this.current.location[0]+num,this.current.location[1]+i]:null)
-        const checks = lows.map(low=>low!==undefined?[low[0]+1,low[1]]:null)
+        const lows = this.current.piece.bottommost().map((num,i)=>num!==null?[this.current.location[0]+num,this.current.location[1]+i]:null)
+        const checks = lows.map(low=>low!==null?[low[0]+1,low[1]]:null)
         return !checks.find(check=>(check && (check[0]>=21 || this.board[check[0]][check[1]])));
     }
 
     canMoveLeft() {
-        const lefts = this.current.piece.leftmost().map((num,i)=>num!==undefined?[this.current.location[0]+i,this.current.location[1]+num]:null);
-        const checks = lefts.map(left=>left!==undefined?[left[0],left[1]-1]:null);
+        const lefts = this.current.piece.leftmost().map((num,i)=>num!==null?[this.current.location[0]+i,this.current.location[1]+num]:null);
+        const checks = lefts.map(left=>left!==null?[left[0],left[1]-1]:null);
         return !checks.find(check=>(check && (check[1]<0 || this.board[check[0]][check[1]])));
     }
 
     canMoveRight() {
-        const rights = this.current.piece.rightmost().map((num,i)=>num!==undefined?[this.current.location[0]+i,this.current.location[1]+num]:null);
-        const checks = rights.map(right=>right!==undefined?[right[0],right[1]+1]:null);
+        const rights = this.current.piece.rightmost().map((num,i)=>num!==null?[this.current.location[0]+i,this.current.location[1]+num]:null);
+        const checks = rights.map(right=>right!==null?[right[0],right[1]+1]:null);
         return !checks.find(check=>(check && (check[1]>=10 || this.board[check[0]][check[1]])));
     }
 
@@ -84,7 +84,7 @@ class Tetris {
     }
 
     renderBoard() {
-        console.log(`SCORE: ${this.score}\nLEVEL: ${this.level}\n"ROWS COMPLETED: ${this.rowsCompleted}`);
+        console.log(`SCORE: ${this.score}\nLEVEL: ${this.level}\nROWS COMPLETED: ${this.rowsCompleted}`);
         console.log(this.board.slice(0,21).map(
             row=>row.map(col=> {
                 if (col===2) return "X";
