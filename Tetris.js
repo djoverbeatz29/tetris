@@ -102,10 +102,7 @@ class Tetris {
                 this.board.unshift([...Array(10).keys()].map(i=>0));
                 this.score += 40 * this.level;
                 this.levelsCompleted += 1;
-                if (this.levelsCompleted === 10) {
-                    this.level += 1;
-                    this.levelsCompleted = 0;
-                }
+                if (this.levelsCompleted % 10 === 0) this.level += 1;
             })
             this.getPiece();
         }
