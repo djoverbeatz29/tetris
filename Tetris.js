@@ -7,7 +7,7 @@ class Tetris {
         this.gameOn = true;
         this.score = 0;
         this.level = 1;
-        this.levelsCompleted = 0;
+        this.rowsCompleted = 0;
         this.getPiece();
     }
 
@@ -84,6 +84,7 @@ class Tetris {
     }
 
     renderBoard() {
+        console.log(`SCORE: ${this.score}\nLEVEL: ${this.level}\n"ROWS COMPLETED: ${this.rowsCompleted}`);
         console.log(this.board.slice(0,21).map(
             row=>row.map(col=> {
                 if (col===2) return "X";
@@ -101,8 +102,8 @@ class Tetris {
                 this.board.splice(i,1);
                 this.board.unshift([...Array(10).keys()].map(i=>0));
                 this.score += 40 * this.level;
-                this.levelsCompleted += 1;
-                if (this.levelsCompleted % 10 === 0) this.level += 1;
+                this.rowsCompleted += 1;
+                if (this.rowsCompleted % 10 === 0) this.level += 1;
             })
             this.getPiece();
         }
